@@ -1,13 +1,14 @@
 .dataVisualize-box {
   .top-box {
     box-sizing: border-box;
-    padding: 25px 40px 0;
+    padding: 25px 40px;
     margin-bottom: 10px;
     .top-title {
       margin-bottom: 10px;
       font-family: DIN;
       font-size: 18px;
       font-weight: bold;
+      margin-bottom: 20px;
     }
     .top-content {
       margin-top: 10px;
@@ -137,7 +138,7 @@
     padding: 20px 0 0;
     .bottom-title {
       position: absolute;
-      top: 75px;
+      top: 25px;
       left: 50px;
       font-family: DIN;
       font-size: 18px;

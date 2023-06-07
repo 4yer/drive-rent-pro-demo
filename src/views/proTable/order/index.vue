@@ -1,8 +1,12 @@
 <template>
   <div class="table-box">
+    <div class="card mb10 pt0 pb0">
+      <SelectFilter :data="filterData" :default-values="filterResult" @change="changeFilter" />
+    </div>
+
     <ProTable
       ref="proTable"
-      title="车辆列表"
+      title="订单列表"
       :columns="columns"
       :request-api="getTableList"
       :init-param="initParam"
@@ -10,8 +14,8 @@
     >
       <!-- 表格 header 按钮 -->
       <template #tableHeader="scope">
-        <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')"> 新增车辆 </el-button>
-        <el-button type="primary" :icon="Download" plain @click="downloadFile"> 导出车辆数据 </el-button>
+        <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')"> 新增订单 </el-button>
+        <el-button type="primary" :icon="Download" plain @click="downloadFile"> 导出订单数据 </el-button>
         <el-button type="danger" :icon="Delete" plain :disabled="!scope.isSelected" @click="batchDelete(scope.selectedListIds)">
           删除
         </el-button>
@@ -47,18 +51,19 @@
 import { ref, reactive } from "vue";
 // import { useRouter } from "vue-router";
 import { User } from "@/api/interface";
-import { Car } from "@/api/interface";
+import { Order } from "@/api/interface";
 import { useHandleData } from "@/hooks/useHandleData";
 import { useDownload } from "@/hooks/useDownload";
 import { ElMessage, ElMessageBox } from "element-plus";
 import ProTable from "@/components/ProTable/index.vue";
 import ImportExcel from "@/components/ImportExcel/index.vue";
+import SelectFilter from "@/components/SelectFilter/index.vue";
 import UserDrawer from "@/views/proTable/components/UserDrawer.vue";
 import { ProTableInstance, ColumnProps } from "@/components/ProTable/interface";
 import { CirclePlus, Delete, EditPen, Download, View } from "@element-plus/icons-vue";
 import { deleteUser, editUser, addUser, exportUserInfo } from "@/api/modules/user";
 
-import { getCarList } from "@/api/modules/car";
+import { getOrderList } from "@/api/modules/order";
 
 // const router = useRouter();
 
@@ -91,14 +96,70 @@ const getTableList = (params: any) => {
   newParams.createTime && (newParams.startTime = newParams.createTime[0]);
   newParams.createTime && (newParams.endTime = newParams.createTime[1]);
   delete newParams.createTime;
-  return getCarList(newParams);
+  return getOrderList(newParams);
+};
+
+// 订单状态
+const filterData = [
+  {
+    title: "订单状态",
+    key: "status",
+    options: [
+      {
+        label: "全部",
+        value: ""
+      },
+      {
+        label: "待确认",
+        value: "1",
+        icon: "ShoppingCart"
+      },
+      {
+        label: "待支付",
+        value: "2",
+        icon: "Edit"
+      },
+      {
+        label: "进行中",
+        value: "3",
+        icon: "Van"
+      },
+      {
+        label: "结算中",
+        value: "4",
+        icon: "Guide"
+      },
+      {
+        label: "已完成",
+        value: "5",
+        icon: "CircleCheck"
+      },
+      {
+        label: "已取消",
+        value: "6",
+        icon: "CircleClose"
+      }
+    ]
+  }
+];
+
+const filterResult = ref({ state: "1", type: ["1", "3"] });
+
+const changeFilter = (val: typeof filterResult.value) => {
+  filterResult.value = val;
 };
 
 // 表格配置项
-const columns: ColumnProps<Car.ResCarList>[] = [
+const columns: ColumnProps<Order.ResOrderList>[] = [
   { type: "selection", fixed: "left", width: 80 },
   // { type: "index", label: "#", width: 80 },
   // { type: "expand", label: "Expand", width: 100 },
+  {
+    prop: "id",
+    label: "订单编号",
+    width: 120,
+    search: { el: "input" }
+  },
   {
     prop: "carId",
     label: "车牌号",
@@ -110,27 +171,36 @@ const columns: ColumnProps<Car.ResCarList>[] = [
     label: "车型"
   },
   {
-    prop: "color",
-    label: "颜色"
+    prop: "driver",
+    label: "司机",
+    render: scope => {
+      return (
+        <el-button type="primary" link>
+          {scope.row.driver}
+        </el-button>
+      );
+    }
   },
   {
-    prop: "type",
-    label: "类型"
+    prop: "driverPhone",
+    label: "司机电话",
+    width: 120
   },
   {
-    prop: "rentalStatus",
-    label: "出租状态",
+    prop: "rent",
+    label: "租金",
+    width: 100
+  },
+  {
+    prop: "status",
+    label: "订单状态",
     tag: true,
     width: 100
   },
   {
-    prop: "idleDays",
-    label: "闲置天数",
+    prop: "nextPayDate",
+    label: "下次还款日期",
     width: 120
-  },
-  {
-    prop: "status",
-    label: "车辆状态"
   },
   {
     prop: "store",
@@ -140,7 +210,7 @@ const columns: ColumnProps<Car.ResCarList>[] = [
   {
     prop: "createTime",
     label: "创建时间",
-    width: 180,
+    width: 150,
     search: {
       el: "date-picker",
       span: 2,
@@ -151,21 +221,21 @@ const columns: ColumnProps<Car.ResCarList>[] = [
   { prop: "operation", label: "操作", fixed: "right", width: 200 }
 ];
 
-// 批量删除车辆信息
+// 批量删除订单信息
 const batchDelete = async (id: string[]) => {
-  await useHandleData(deleteUser, { id }, "删除所选车辆信息");
+  await useHandleData(deleteUser, { id }, "删除所选订单信息");
   proTable.value?.clearSelection();
   proTable.value?.getTableList();
 };
 
-// 导出车辆列表
+// 导出订单列表
 const downloadFile = async () => {
-  ElMessageBox.confirm("确认导出车辆数据?", "温馨提示", { type: "warning" }).then(() =>
-    useDownload(exportUserInfo, "车辆列表", proTable.value?.searchParam)
+  ElMessageBox.confirm("确认导出订单数据?", "温馨提示", { type: "warning" }).then(() =>
+    useDownload(exportUserInfo, "订单列表", proTable.value?.searchParam)
   );
 };
 
-// 批量添加车辆
+// 批量添加订单
 const dialogRef = ref<InstanceType<typeof ImportExcel> | null>(null);
 
 // 打开 drawer(新增、查看、编辑)

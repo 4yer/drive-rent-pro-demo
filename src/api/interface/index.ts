@@ -127,3 +127,28 @@ export namespace Car {
     children?: ResDepartment[];
   }
 }
+
+// 订单管理模块
+export namespace Order {
+  export interface ReqOrderParams extends ReqPage {
+    id: string;
+    carId: string;
+    name: string;
+    store: string;
+    driverPhone: string;
+    status: string;
+    createTime: string;
+  }
+  export interface ResOrderList {
+    id: string;
+    carId: string;
+    name: string;
+    store: string;
+    driver: string;
+    driverPhone: string;
+    status: string;
+    rent: string;
+    nextPayDate: string;
+    createTime: string;
+  }
+}

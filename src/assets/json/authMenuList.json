@@ -62,9 +62,9 @@
           ]
         },
         {
-          "path": "/proTable/useTreeFilter",
-          "name": "useTreeFilter",
-          "component": "/proTable/useTreeFilter/index",
+          "path": "/proTable/cars2",
+          "name": "cars2",
+          "component": "/proTable/car/index",
           "meta": {
             "icon": "Menu",
             "title": "车辆违章",
@@ -76,9 +76,9 @@
           }
         },
         {
-          "path": "/proTable/useTreeFilter/detail/:id",
-          "name": "useTreeFilterDetail",
-          "component": "/proTable/useTreeFilter/detail",
+          "path": "/proTable/cars3",
+          "name": "cars3",
+          "component": "/proTable/car/index",
           "meta": {
             "icon": "Menu",
             "title": "TreeFilter 详情",
@@ -91,9 +91,9 @@
           }
         },
         {
-          "path": "/proTable/useSelectFilter",
-          "name": "useSelectFilter",
-          "component": "/proTable/useSelectFilter/index",
+          "path": "/proTable/cars4",
+          "name": "cars4",
+          "component": "/proTable/car/index",
           "meta": {
             "icon": "Menu",
             "title": "年检管理",
@@ -105,9 +105,9 @@
           }
         },
         {
-          "path": "/proTable/treeProTable",
-          "name": "treeProTable",
-          "component": "/proTable/treeProTable/index",
+          "path": "/proTable/cars5",
+          "name": "cars5",
+          "component": "/proTable/car/index",
           "meta": {
             "icon": "Menu",
             "title": "保险管理",
@@ -119,9 +119,9 @@
           }
         },
         {
-          "path": "/proTable/complexProTable",
-          "name": "complexProTable",
-          "component": "/proTable/complexProTable/index",
+          "path": "/proTable/cars6",
+          "name": "cars6",
+          "component": "/proTable/car/index",
           "meta": {
             "icon": "Menu",
             "title": "保养管理",
@@ -133,13 +133,13 @@
           }
         },
         {
-          "path": "/proTable/document",
-          "name": "proTableDocument",
-          "component": "/proTable/document/index",
+          "path": "/proTable/cars7",
+          "name": "cars7",
+          "component": "/proTable/car/index",
           "meta": {
             "icon": "Menu",
             "title": "车辆GPS",
-            "isLink": "https://juejin.cn/post/7166068828202336263/#heading-14",
+            "isLink": "",
             "isHide": false,
             "isFull": false,
             "isAffix": false,
@@ -152,7 +152,7 @@
     {
       "path": "/orders",
       "name": "orders",
-      "redirect": "/proTable/useProTable",
+      "redirect": "/proTable/orders",
       "meta": {
         "icon": "MessageBox",
         "title": "订单管理",
@@ -164,9 +164,9 @@
       },
       "children": [
         {
-          "path": "/orders",
-          "name": "rentalOrder",
-          "component": "/proTable/useProTable/index",
+          "path": "/proTable/orders",
+          "name": "orders",
+          "component": "/proTable/order/index",
           "meta": {
             "icon": "Menu",
             "title": "租车订单",
@@ -212,8 +212,8 @@
       "children": [
         {
           "path": "/drivers",
-          "name": "rentalOrder",
-          "component": "/proTable/useProTable/index",
+          "name": "drivers",
+          "component": "/proTable/useProTable/index2",
           "meta": {
             "icon": "Menu",
             "title": "司机列表",
@@ -242,7 +242,7 @@
           ]
         },
         {
-          "path": "/drivers",
+          "path": "/drivers2",
           "name": "rentalApplication",
           "component": "/proTable/useProTable/index",
           "meta": {
@@ -290,9 +290,9 @@
       },
       "children": [
         {
-          "path": "/auth/menu",
-          "name": "authMenu",
-          "component": "/auth/menu/index",
+          "path": "/payment/index",
+          "name": "payment",
+          "component": "/payment/index",
           "meta": {
             "icon": "Menu",
             "title": "收支明细",
@@ -304,9 +304,9 @@
           }
         },
         {
-          "path": "/auth/button",
-          "name": "authButton",
-          "component": "/auth/button/index",
+          "path": "/payment/index2",
+          "name": "payment2",
+          "component": "/payment/index",
           "meta": {
             "icon": "Menu",
             "title": "收支汇总",
@@ -318,9 +318,9 @@
           }
         },
         {
-          "path": "/auth/button",
-          "name": "authButton",
-          "component": "/auth/button/index",
+          "path": "/payment/index3",
+          "name": "payment3",
+          "component": "/payment/index",
           "meta": {
             "icon": "Menu",
             "title": "账单列表",
@@ -332,9 +332,9 @@
           }
         },
         {
-          "path": "/auth/button",
-          "name": "authButton",
-          "component": "/auth/button/index",
+          "path": "/payment/index4",
+          "name": "payment4",
+          "component": "/payment/index",
           "meta": {
             "icon": "Menu",
             "title": "账单结清",
