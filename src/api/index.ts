@@ -10,6 +10,7 @@ import router from "@/routers";
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   noLoading?: boolean;
+  absoluteUrl?: boolean;
 }
 
 const config = {
@@ -40,6 +41,11 @@ class RequestHttp {
         if (config.headers && typeof config.headers.set === "function") {
           config.headers.set("x-access-token", userStore.token);
         }
+
+        if (config.absoluteUrl) {
+          config.baseURL = "";
+        }
+
         return config;
       },
       (error: AxiosError) => {

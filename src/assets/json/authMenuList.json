@@ -31,9 +31,9 @@
       },
       "children": [
         {
-          "path": "/proTable/useProTable",
-          "name": "useProTable",
-          "component": "/proTable/useProTable/index",
+          "path": "/proTable/cars",
+          "name": "cars",
+          "component": "/proTable/car/index",
           "meta": {
             "icon": "Menu",
             "title": "车辆列表",

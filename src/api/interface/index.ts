@@ -88,3 +88,42 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// 车辆管理模块
+export namespace Car {
+  export interface ReqCarParams extends ReqPage {
+    carId: string;
+    name: string;
+    rentalStatus: string;
+    idleDays: string;
+    status: string;
+    createTime: string;
+  }
+  export interface ResCarList {
+    id: string;
+    carId: string;
+    name: string;
+    rentalStatus: string;
+    idleDays: string;
+    status: string;
+    createTime: string;
+  }
+  export interface ResStatus {
+    userLabel: string;
+    userValue: number;
+  }
+  // export interface ResGender {
+  //   genderLabel: string;
+  //   genderValue: number;
+  // }
+  export interface ResDepartment {
+    id: string;
+    name: string;
+    children?: ResDepartment[];
+  }
+  export interface ResRole {
+    id: string;
+    name: string;
+    children?: ResDepartment[];
+  }
+}
