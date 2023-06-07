@@ -106,7 +106,11 @@ export namespace Car {
     rentalStatus: string;
     idleDays: string;
     status: string;
+    engineNo: string;
+    color: string;
     createTime: string;
+    store: string;
+    photo: string;
   }
   export interface ResStatus {
     userLabel: string;

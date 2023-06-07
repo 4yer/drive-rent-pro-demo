@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="drawerVisible" :destroy-on-close="true" size="450px" :title="`${drawerProps.title}用户`">
+  <el-drawer v-model="drawerVisible" :destroy-on-close="true" size="450px" :title="`${drawerProps.title}车辆`">
     <el-form
       ref="ruleFormRef"
       label-width="100px"
@@ -9,8 +9,8 @@
       :model="drawerProps.row"
       :hide-required-asterisk="drawerProps.isView"
     >
-      <el-form-item label="车辆照片" prop="avatar">
-        <UploadImg v-model:image-url="drawerProps.row!.avatar" width="135px" height="135px" :file-size="3">
+      <el-form-item label="车辆照片" prop="photo">
+        <UploadImg v-model:image-url="drawerProps.row!.photo" width="135px" height="135px" :file-size="3">
           <template #empty>
             <el-icon><Avatar /></el-icon>
             <span>请上传车辆照片</span>
@@ -27,22 +27,22 @@
           <template #tip> 照片大小不能超过 5M </template>
         </UploadImgs>
       </el-form-item> -->
-      <el-form-item label="车牌号码" prop="username">
-        <el-input v-model="drawerProps.row!.username" placeholder="请填写用户姓名" clearable></el-input>
+      <el-form-item label="车牌号码" prop="carId">
+        <el-input v-model="drawerProps.row!.carId" placeholder="请填写车牌号码" clearable></el-input>
       </el-form-item>
-      <el-form-item label="车辆型号" prop="gender">
-        <el-select v-model="drawerProps.row!.gender" placeholder="请选择性别" clearable>
+      <el-form-item label="车辆型号" prop="name">
+        <el-select v-model="drawerProps.row!.name" placeholder="请选择车辆型号" clearable>
           <el-option v-for="item in genderType" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
-      <el-form-item label="发动机号" prop="idCard">
-        <el-input v-model="drawerProps.row!.idCard" placeholder="请填写身份证号" clearable></el-input>
+      <el-form-item label="发动机号" prop="engineNo">
+        <el-input v-model="drawerProps.row!.engineNo" placeholder="请填写发动机号" clearable></el-input>
       </el-form-item>
-      <el-form-item label="颜色" prop="email">
-        <el-input v-model="drawerProps.row!.email" placeholder="请填写邮箱" clearable></el-input>
+      <el-form-item label="颜色" prop="color">
+        <el-input v-model="drawerProps.row!.color" placeholder="请填写颜色" clearable></el-input>
       </el-form-item>
-      <el-form-item label="类型" prop="address">
-        <el-input v-model="drawerProps.row!.address" placeholder="请填写居住地址" clearable></el-input>
+      <el-form-item label="门店" prop="store">
+        <el-input v-model="drawerProps.row!.store" placeholder="请填写门店" clearable></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -56,24 +56,24 @@
 import { ref, reactive } from "vue";
 import { genderType } from "@/utils/serviceDict";
 import { ElMessage, FormInstance } from "element-plus";
-import { User } from "@/api/interface";
+import { Car } from "@/api/interface";
 import UploadImg from "@/components/Upload/Img.vue";
 // import UploadImgs from "@/components/Upload/Imgs.vue";
 
 const rules = reactive({
-  avatar: [{ required: true, message: "请上传用户头像" }],
+  avatar: [{ required: true, message: "请上传车辆照片" }],
   photo: [{ required: true, message: "请上传车辆照片" }],
-  username: [{ required: true, message: "请填写用户姓名" }],
-  gender: [{ required: true, message: "请选择性别" }],
-  idCard: [{ required: true, message: "请填写身份证号" }],
-  email: [{ required: true, message: "请填写邮箱" }],
-  address: [{ required: true, message: "请填写居住地址" }]
+  carId: [{ required: true, message: "请填写车牌号码" }],
+  gender: [{ required: true, message: "请选择车辆型号" }],
+  idCard: [{ required: true, message: "请填写发动机号" }],
+  email: [{ required: true, message: "请填写颜色" }],
+  store: [{ required: true, message: "请填写车辆类型" }]
 });
 
 interface DrawerProps {
   title: string;
   isView: boolean;
-  row: Partial<User.ResUserList>;
+  row: Partial<Car.ResCarList>;
   api?: (params: any) => Promise<any>;
   getTableList?: () => void;
 }
@@ -98,7 +98,7 @@ const handleSubmit = () => {
     if (!valid) return;
     try {
       await drawerProps.value.api!(drawerProps.value.row);
-      ElMessage.success({ message: `${drawerProps.value.title}用户成功！` });
+      ElMessage.success({ message: `${drawerProps.value.title}车辆成功！` });
       drawerProps.value.getTableList!();
       drawerVisible.value = false;
     } catch (error) {
