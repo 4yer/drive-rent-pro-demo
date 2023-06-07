@@ -38,7 +38,7 @@
         <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)"> 编辑 </el-button>
       </template>
     </ProTable>
-    <UserDrawer ref="drawerRef" />
+    <CarDrawer ref="drawerRef" />
     <ImportExcel ref="dialogRef" />
   </div>
 </template>
@@ -46,17 +46,16 @@
 <script setup lang="tsx" name="useProTable">
 import { ref, reactive } from "vue";
 // import { useRouter } from "vue-router";
-import { User } from "@/api/interface";
 import { Car } from "@/api/interface";
 import { useHandleData } from "@/hooks/useHandleData";
 import { useDownload } from "@/hooks/useDownload";
 import { ElMessage, ElMessageBox } from "element-plus";
 import ProTable from "@/components/ProTable/index.vue";
 import ImportExcel from "@/components/ImportExcel/index.vue";
-import UserDrawer from "@/views/proTable/components/UserDrawer.vue";
+import CarDrawer from "@/views/proTable/components/CarDrawer.vue";
 import { ProTableInstance, ColumnProps } from "@/components/ProTable/interface";
 import { CirclePlus, Delete, EditPen, Download, View } from "@element-plus/icons-vue";
-import { deleteUser, editUser, addUser, exportUserInfo } from "@/api/modules/user";
+import { deleteUser, exportUserInfo } from "@/api/modules/user";
 
 import { getCarList } from "@/api/modules/car";
 
@@ -169,13 +168,12 @@ const downloadFile = async () => {
 const dialogRef = ref<InstanceType<typeof ImportExcel> | null>(null);
 
 // 打开 drawer(新增、查看、编辑)
-const drawerRef = ref<InstanceType<typeof UserDrawer> | null>(null);
-const openDrawer = (title: string, row: Partial<User.ResUserList> = {}) => {
+const drawerRef = ref<InstanceType<typeof CarDrawer> | null>(null);
+const openDrawer = (title: string, row: Partial<Car.ResCarList> = {}) => {
   const params = {
     title,
     isView: title === "查看",
     row: { ...row },
-    api: title === "新增" ? addUser : title === "编辑" ? editUser : undefined,
     getTableList: proTable.value?.getTableList
   };
   drawerRef.value?.acceptParams(params);
